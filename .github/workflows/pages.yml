@@ -1,0 +1,42 @@
+name: Publish Seby Official
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "7,37 * * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Get the site files
+        uses: actions/checkout@v6
+      - name: Prepare Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Refresh official news and event data
+        run: python update_feed.py
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Package the site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+      - name: Publish HTTPS site
+        id: deployment
+        uses: actions/deploy-pages@v4
