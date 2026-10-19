@@ -1,0 +1,11 @@
+PUBLICAREA SEBY OFFICIAL CU HTTPS
+
+Site-ul este pregătit pentru GitHub Pages. Pentru vizitatori, pagina rămâne HTML, CSS și JavaScript; Python este folosit numai de automatizarea online care actualizează fișierul updates.json.
+
+Pașii care mai trebuie făcuți pe GitHub:
+1. Creează un repository public numit Seby-Official și încarcă toate fișierele din acest folder, inclusiv folderul ascuns .github.
+2. În repository, deschide Settings > Pages și selectează GitHub Actions ca sursă de publicare.
+3. Deschide Actions și pornește workflow-ul „Publish Seby Official”.
+4. După publicare, linkul are forma https://NUMELE-TAU.github.io/Seby-Official/.
+
+Workflow-ul verifică sursele oficiale aproximativ la fiecare 30 de minute și publică pagina cu datele actualizate. GitHub poate întârzia unele rulări programate.

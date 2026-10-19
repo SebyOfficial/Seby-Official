@@ -1,0 +1,12 @@
+SEBY OFFICIAL — INFORMAȚII LIVE
+
+1. Deschide folderul Seby-Official.
+2. Dă dublu-click pe Pornește-site.bat.
+3. Se va deschide site-ul la http://127.0.0.1:8765.
+4. Lasă fereastra neagră deschisă cât timp folosești site-ul.
+5. Apasă „Actualizează acum” pentru o verificare imediată. Site-ul verifică automat din 15 în 15 minute.
+6. Când ai terminat, oprește serverul apăsând Ctrl+C în fereastra neagră.
+
+Pentru pornire este necesar Python 3 instalat pe calculator. Programul folosește doar bibliotecile incluse în Python și citește paginile publice oficiale Drakensang Online. Nu cere cont, parolă sau date personale.
+
+Dacă o sursă oficială nu răspunde ori își schimbă formatul, informația poate lipsi temporar; folosește linkurile oficiale din secțiunea „Coduri & evenimente live”.
