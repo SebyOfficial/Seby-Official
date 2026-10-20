@@ -1,0 +1,21 @@
+CUM FACI SITE-UL SEBY OFFICIAL UȘOR DE GĂSIT ÎN GOOGLE
+
+Important: Chrome este browserul în care deschizi site-uri. Google este motorul de căutare. Ca să te găsească alți oameni, site-ul trebuie întâi publicat pe internet; un fișier deschis de pe calculator nu apare în Google.
+
+1. PUBLICĂ SITE-UL
+Urmează pașii din PUBLICARE-HTTPS.txt. Repository-ul trebuie să se numească Seby-Official și să includă folderul ascuns .github. După ce GitHub Pages publică site-ul, copiază adresa HTTPS afișată în Settings > Pages sau în Actions.
+
+2. TRIMITE SITE-UL LA GOOGLE
+- Deschide https://search.google.com/search-console/ și conectează-te cu un cont Google.
+- Alege adăugarea unei proprietăți de tip URL prefix.
+- Lipește adresa publică exactă a site-ului, de exemplu adresa afișată de GitHub Pages.
+- Urmează metoda de verificare oferită de Google.
+- După verificare, deschide Sitemaps și trimite sitemap.xml.
+
+Workflow-ul site-ului generează automat sitemap.xml, robots.txt, adresele canonice și descrieri pentru pagini folosind adresa GitHub Pages reală.
+
+3. VERIFICĂ DACĂ GOOGLE L-A GĂSIT
+După publicare, caută în Google: site:ADRESA-TA-PUBLICĂ
+Poate dura până când Google vizitează și adaugă paginile. Sitemap-ul și Search Console îl ajută să le descopere, dar nu garantează o anumită poziție sau afișare imediată.
+
+Pentru rezultate mai bune, păstrează titluri clare și informații originale, actualizate. Nu plăti pe cineva care promite primul loc în Google.

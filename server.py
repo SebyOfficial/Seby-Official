@@ -19,8 +19,9 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parent
 NEWS_URL = "https://www.drakensang.com/en/news"
 FORUM_URL = "https://board-en.drakensang.com/forums/event-announcements.120/"
+BONUS_CODES_URL = "https://board-en.drakensang.com/threads/bonusove-kody.88869/page-4"
 USER_AGENT = "SebyOfficialFanSite/1.0 (official public news reader)"
-CACHE_SECONDS = 300
+CACHE_SECONDS = 60
 cache_lock = threading.Lock()
 cache_data = None
 cache_time = 0.0
@@ -105,7 +106,9 @@ def date_from_validity(value: str):
 def extract_codes(title: str, text: str):
     results = []
     pattern = re.compile(r"\b(?:BONUS\s+)?CODES?\s*[:(]\s*([A-Z0-9][A-Z0-9_-]{2,}(?:\s*(?:&|,|and)\s*[A-Z0-9][A-Z0-9_-]{2,})*)", re.I)
-    for match in pattern.finditer(title + "\n" + text):
+    # Only take codes from the article title. The official news page repeats
+    # other stories in its sidebar, which otherwise pollutes article results.
+    for match in pattern.finditer(title):
         for code in re.split(r"\s*(?:&|,|and)\s*", match.group(1), flags=re.I):
             code = code.strip().rstrip(")").upper()
             if code and code not in results:
@@ -166,13 +169,58 @@ def read_forum_schedule():
             return {"title": "", "url": FORUM_URL, "items": []}
         text = page_text(fetch(monthly["url"]))
         schedule = []
+        previous = ""
+        today = date.today()
         for line in text.splitlines():
-            if re.search(r"\b\d{1,2}[./-]\d{1,2}\b.*\b\d{1,2}:\d{2}\b", line) or re.search(r"\b\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}\b", line):
-                if line not in schedule:
-                    schedule.append(line[:240])
+            if re.search(r"\b\d{1,2}[./-]\d{1,2}\b.*\b\d{1,2}:\d{2}\b", line):
+                event_name = previous.strip(" •*⚜️") or "Eveniment Drakensang Online"
+                # Keep only items that have not finished yet; the current year is the calendar's year.
+                dates = re.findall(r"(\d{1,2})[./-](\d{1,2})", line)
+                if dates:
+                    try:
+                        end_day, end_month = map(int, dates[-1])
+                        end_date = date(today.year, end_month, end_day)
+                        if end_date >= today:
+                            schedule.append({"title": event_name, "duration": line[:200], "url": monthly["url"]})
+                    except ValueError:
+                        schedule.append({"title": event_name, "duration": line[:200], "url": monthly["url"]})
+                previous = ""
+            elif line and not re.search(r"events? coming|all times|times may change|disclaimer|heroes of dracania|your drakensang", line, re.I):
+                previous = line
         return {"title": monthly["title"], "url": monthly["url"], "items": schedule[:35]}
     except Exception:
         return {"title": "", "url": FORUM_URL, "items": []}
+
+
+def read_moderator_codes():
+    """Read the current code details posted by the DSO moderator."""
+    rewards = {
+        "99IPS": "Recompensă: 99 fragmente de trecere infernală.",
+        "COINS50": "Recompensă: 50 de monede ale comunității.",
+        "DRAGONBONES": "Recompensă: 50 de oase de dragon.",
+        "6KEYS": "Recompensă: 6 chei de amforă.",
+        "LUCKY3PEARLS": "Recompensă: 3 perle blestemate împuternicite.",
+        "DRAGANNEWJEWEL": "Recompensă: 2 perle blestemate împuternicite.",
+        "2PEARLS": "Recompensă: 2 perle blestemate împuternicite.",
+    }
+    try:
+        text = page_text(fetch(BONUS_CODES_URL))
+    except Exception:
+        return []
+    expiry_match = re.search(r"12[./]11[./]2026", text)
+    if not expiry_match:
+        return []
+    return [
+        {
+            "code": code,
+            "title": "Cod bonus Drakensang Online",
+            "validity": f"{reward} · valabil până la 12.11.2026.",
+            "expired": date.today() > date(2026, 11, 12),
+            "url": BONUS_CODES_URL,
+        }
+        for code, reward in rewards.items()
+        if re.search(rf"\b{re.escape(code)}\b", text)
+    ]
 
 
 def collect_updates():
@@ -192,13 +240,13 @@ def collect_updates():
                 pass
     order = {item["url"]: index for index, item in enumerate(items)}
     articles.sort(key=lambda item: order.get(item["url"], 999))
-    codes = []
+    codes = read_moderator_codes()
     for article in articles:
         for code in article.get("codes", []):
             if not any(existing["code"] == code["code"] for existing in codes):
                 codes.append({**code, "title": article["title"], "url": article["url"]})
     events = [article for article in articles if article.get("duration") or re.search(r"event|festival|season pass", article["title"], re.I)]
-    return {"checkedAt": datetime.now().astimezone().isoformat(timespec="minutes"), "codes": codes, "events": events[:12], "schedule": read_forum_schedule(), "news": articles[:12], "errors": errors, "sources": {"news": NEWS_URL, "forum": FORUM_URL}}
+    return {"checkedAt": datetime.now().astimezone().isoformat(timespec="minutes"), "codes": codes, "events": events[:12], "schedule": read_forum_schedule(), "news": articles[:12], "errors": errors, "sources": {"news": NEWS_URL, "forum": FORUM_URL, "codes": BONUS_CODES_URL}}
 
 
 def updates(force=False):

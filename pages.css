@@ -1,0 +1,14 @@
+.topic-hero{max-width:1120px;margin:auto;padding:48px 20px 25px;display:grid;grid-template-columns:1fr .8fr;gap:28px;align-items:center}
+.topic-hero h1{font-size:clamp(36px,6vw,60px);line-height:1.1;margin:0 0 12px}.topic-hero p,.topic-content p,.topic-content li{color:var(--muted)}
+.topic-visual{min-height:250px;display:grid;place-items:center;border:1px solid #71402e;border-radius:12px;background:radial-gradient(circle,#8c341a 0,#31100b 48%,#170b09 78%);font-size:clamp(90px,18vw,160px);text-shadow:0 12px 40px #ff6b2488;box-shadow:0 15px 40px #0008}
+.topic-visual img{display:block;width:100%;height:100%;max-height:340px;object-fit:cover;border-radius:11px}.topic-visual img[src*="cms.drakensang.com"]{width:90%;height:auto;max-height:310px;object-fit:contain}
+.official-item-image{display:block;width:auto;max-width:100%;height:auto;max-height:420px;object-fit:contain;margin:12px auto;border-radius:8px;image-rendering:auto}
+.class-card-image{display:block;width:100%;height:190px;object-fit:cover;object-position:center 28%;border-radius:8px;margin:0 0 12px;image-rendering:auto}
+.image-caption{font-size:12px;color:var(--muted);text-align:center;margin:6px auto 16px;max-width:760px}
+.topic-content{max-width:1000px;margin:auto;padding:20px 20px 64px}.topic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.topic-grid .card{min-height:0}.topic-grid .card a{display:inline-block;margin-top:8px}.back-link{display:inline-block;margin:20px;color:var(--gold2)}
+.topic-menu{position:relative}.topic-menu summary{cursor:pointer;list-style:none;font-size:13px;color:#d4d9e2}.topic-menu summary::-webkit-details-marker{display:none}.topic-menu summary:after{content:' ▾';color:var(--gold)}.topic-menu[open] .topic-menu-list{position:absolute;top:30px;right:0;z-index:8;min-width:220px;padding:10px;background:#170d0b;border:1px solid #71402e;border-radius:8px;box-shadow:0 14px 35px #0009;display:grid;gap:5px}.topic-menu-list a{padding:7px 10px;border-radius:5px}.topic-menu-list a:hover{background:#35160f}
+@media(max-width:700px){.topic-hero,.topic-grid{grid-template-columns:1fr}.topic-hero{padding-top:28px}.topic-visual{min-height:190px}.topic-menu[open] .topic-menu-list{position:static;margin-top:7px}}
+
+
+article[data-href],.live-card[data-href]{cursor:pointer}article[data-href]:focus-visible,.live-card[data-href]:focus-within{outline:2px solid var(--gold2);outline-offset:3px}
+

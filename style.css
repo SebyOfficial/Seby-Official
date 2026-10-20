@@ -16,6 +16,7 @@
 .source-note{max-width:1120px;margin:18px auto 0;text-align:center;font-size:12px;color:var(--muted)}.source-note a{color:var(--gold2);text-decoration:underline;text-underline-offset:3px}
 
 /* Seby Official: ember and dragonfire theme */
+.hero-rune .dragon-letter{font-family:Georgia,'Times New Roman',serif;font-size:clamp(125px,19vw,185px);font-weight:700;line-height:1;color:#ffd078;text-shadow:0 0 12px #ffbe45,0 0 32px #ff5b1e,0 0 62px #ff3d14;letter-spacing:-.08em;transform:translateX(-5px)}
 :root{--bg:#100807;--panel:#21110e;--panel2:#32150f;--gold:#ff6b24;--gold2:#ffc04d;--text:#fff2e8;--muted:#d0b8ad;--line:#593025;--blue:#ff8140}
 body{background:radial-gradient(ellipse at 50% -15%,#45180f 0,#100807 48%);color:var(--text)}
 .topbar{background:#100807eF;border-bottom-color:#68301f}

@@ -8,4 +8,5 @@ Pașii care mai trebuie făcuți pe GitHub:
 3. Deschide Actions și pornește workflow-ul „Publish Seby Official”.
 4. După publicare, linkul are forma https://NUMELE-TAU.github.io/Seby-Official/.
 
-Workflow-ul verifică sursele oficiale aproximativ la fiecare 30 de minute și publică pagina cu datele actualizate. GitHub poate întârzia unele rulări programate.
+Workflow-ul verifică sursele de știri la fiecare 5 minute și publică pagina cu datele actualizate. GitHub poate întârzia unele rulări programate, iar site-ul sursă poate publica informațiile cu întârziere; de aceea nu se poate garanta afișarea exact la minutul 5. Pagina deschisă reîncarcă automat datele o dată la 5 minute.
+
