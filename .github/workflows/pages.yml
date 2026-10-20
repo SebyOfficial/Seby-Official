@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: "7,37 * * * *"
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: read
@@ -32,7 +32,12 @@ jobs:
       - name: Refresh official news and event data
         run: python update_feed.py
       - name: Configure Pages
+        id: pages
         uses: actions/configure-pages@v5
+      - name: Prepare search engine files
+        env:
+          SITE_BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: python prepare_search.py
       - name: Package the site
         uses: actions/upload-pages-artifact@v4
         with:
