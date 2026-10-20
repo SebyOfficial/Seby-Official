@@ -9,6 +9,7 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 
 ROOT = Path(__file__).resolve().parent
 BASE_URL = os.environ["SITE_BASE_URL"].strip().rstrip("/")
+GOOGLE_VERIFICATION = "Ly5JcbRv1q1YICAm6JeviQoQuZ-uxvEG2FgCqoEPG3s"
 
 DESCRIPTIONS = {
     "index.html": "Seby Official: ghid neoficial Drakensang Online în română, cu clase, echipamente, rune, pietre, evenimente și coduri promoționale.",
@@ -54,6 +55,7 @@ def prepare_page(path: Path) -> None:
     head = re.sub(r"\s*<meta\s+name=['\"]description['\"][^>]*>", "", head, flags=re.I)
     head = re.sub(r"\s*<link\s+rel=['\"]canonical['\"][^>]*>", "", head, flags=re.I)
     head = re.sub(r"\s*<meta\s+property=['\"]og:(?:title|description|type|url)['\"][^>]*>", "", head, flags=re.I)
+    head = re.sub(r"\s*<meta\s+name=['\"]google-site-verification['\"][^>]*>", "", head, flags=re.I)
     tags = (
         f'\n  <meta name="description" content="{html.escape(description, quote=True)}">'
         f'\n  <link rel="canonical" href="{html.escape(canonical, quote=True)}">'
@@ -62,6 +64,8 @@ def prepare_page(path: Path) -> None:
         '\n  <meta property="og:type" content="website">'
         f'\n  <meta property="og:url" content="{html.escape(canonical, quote=True)}">'
     )
+    if path.name == "index.html":
+        tags += f'\n  <meta name="google-site-verification" content="{GOOGLE_VERIFICATION}">'
     source = source[:head_match.start(1)] + head + tags + source[head_match.end(1):]
     path.write_text(source, encoding="utf-8")
 
